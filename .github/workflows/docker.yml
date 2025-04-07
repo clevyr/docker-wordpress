@@ -38,6 +38,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             WORDPRESS_VERSION=${{ matrix.wordpress_version }}
+            CLI_VERSION=${{ matrix.cli_version }}
             PHP_VERSION=${{ matrix.php_version }}
             PHP_EXTENSIONS=${{ matrix.php_extensions }}
           cache-from: type=gha
