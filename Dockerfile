@@ -2,14 +2,14 @@
 
 ARG WORDPRESS_VERSION=6.7.2
 ARG CLI_VERSION=2.11.0
-ARG PHP_VERSION=8.3
+ARG PHP_VERSION=8.4
 ARG FLAVOR=apache
 
 FROM ghcr.io/mlocati/php-extension-installer:2.7.24 AS ext-installer
 
 FROM wordpress:cli-${CLI_VERSION}-php${PHP_VERSION} AS wp-cli-source
 
-FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-${FLAVOR}
+FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-${FLAVOR} AS base
 
 # Disable short tags
 RUN echo 'short_open_tag=Off' >> /usr/local/etc/php/conf.d/custom-php.ini
@@ -23,7 +23,7 @@ RUN mkdir -p /var/www/.wp-cli/cache && \
 ARG WP_CLI_ALLOW_ROOT=1
 ENV WP_CLI_ALLOW_ROOT=$WP_CLI_ALLOW_ROOT
 
+COPY --from=ext-installer /usr/bin/install-php-extensions /usr/local/bin/install-php-extensions
+
 ARG PHP_EXTENSIONS
-RUN --mount=type=bind,from=ext-installer,source=/usr/bin/install-php-extensions,target=/usr/local/bin/install-php-extensions <<EOT
-  install-php-extensions $PHP_EXTENSIONS
-EOT
+ONBUILD RUN install-php-extensions $PHP_EXTENSIONS
