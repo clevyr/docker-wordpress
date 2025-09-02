@@ -9,9 +9,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - wordpress_version: 6.7.2
+          - wordpress_version: 6.8.2
             php_version: 8.4
-            cli_version: 2.11.0
+            cli_version: 2.12.0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
