@@ -13,6 +13,7 @@ FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-${FLAVOR} AS base
 
 COPY --from=wp-cli-source /usr/local/bin/wp /usr/local/bin/wp
 ENV WP_CLI_ALLOW_ROOT=1
+ENV PAGER=cat
 
 RUN <<EOT
   set -eux
