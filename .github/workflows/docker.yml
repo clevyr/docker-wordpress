@@ -12,6 +12,7 @@ jobs:
           - wordpress_version: 6.8.2
             php_version: 8.4
             cli_version: 2.12.0
+            latest: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,6 +24,7 @@ jobs:
           images: ghcr.io/clevyr/wordpress
           tags: |
             type=raw,value=${{ matrix.wordpress_version }}-php${{ matrix.php_version }},enabled=${{ matrix.name == '' }}
+            type=raw,value=php${{ matrix.php_version }},enabled=${{ matrix.latest }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
