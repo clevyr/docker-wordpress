@@ -47,3 +47,5 @@ ARG PHP_EXTENSIONS
 RUN --mount=type=bind,from=ext-installer,src=/usr/bin/install-php-extensions,dst=/usr/bin/install-php-extensions <<EOT
   install-php-extensions $PHP_EXTENSIONS
 EOT
+
+COPY --chown=www-data:www-data wp-content /usr/src/wordpress/wp-content
