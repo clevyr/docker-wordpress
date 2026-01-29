@@ -11,6 +11,21 @@ FROM wordpress:cli-${CLI_VERSION}-php${PHP_VERSION} AS wp-cli-source
 
 FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-${FLAVOR} AS base
 
+FROM alpine AS config-file
+RUN apk add --no-cache sd ripgrep
+COPY wp-config.ext.php /
+COPY --from=base /usr/src/wordpress/wp-config-docker.php /
+RUN <<EOT
+  set -eu
+  ext="$(cat /wp-config.ext.php)"
+  match="/* That's all, stop editing! Happy publishing. */"
+  nl=$'\n'
+  rg --fixed-strings --quiet "$match"  /wp-config-docker.php
+  sd --fixed-strings --max-replacements=1 "$match" "${ext}${nl}${nl}${match}" /wp-config-docker.php
+EOT
+
+FROM base
+
 COPY --from=wp-cli-source /usr/local/bin/wp /usr/local/bin/wp
 ENV WP_CLI_ALLOW_ROOT=1
 ENV PAGER=cat
@@ -48,4 +63,5 @@ RUN --mount=type=bind,from=ext-installer,src=/usr/bin/install-php-extensions,dst
   install-php-extensions $PHP_EXTENSIONS
 EOT
 
+COPY --from=config-file /wp-config-docker.php /usr/src/wordpress/wp-config-docker.php
 COPY --chown=www-data:www-data wp-content /usr/src/wordpress/wp-content
