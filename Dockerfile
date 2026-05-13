@@ -7,6 +7,12 @@ ARG FLAVOR=apache
 
 FROM ghcr.io/mlocati/php-extension-installer:2.7.24 AS ext-installer
 
+FROM --platform=$BUILDPLATFORM alpine AS supercronic
+ARG SUPERCRONIC_VERSION=v0.2.45
+ARG TARGETARCH
+RUN wget -O /usr/local/bin/supercronic "https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" \
+    && chmod +x /usr/local/bin/supercronic
+
 FROM wordpress:cli-${CLI_VERSION}-php${PHP_VERSION} AS wp-cli-source
 
 FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-${FLAVOR} AS base
@@ -26,6 +32,7 @@ EOT
 
 FROM base
 
+COPY --from=supercronic /usr/local/bin/supercronic /usr/local/bin/supercronic
 COPY --from=wp-cli-source /usr/local/bin/wp /usr/local/bin/wp
 ENV WP_CLI_ALLOW_ROOT=1
 ENV PAGER=cat
@@ -49,6 +56,10 @@ RUN <<EOT
       php.ini-production
 
   ln -s php.ini-production php.ini
+
+  apt-get update
+  apt-get install -y s6
+  rm -rf /var/lib/apt/lists/*
 EOT
 
 ENV PHP_MAX_EXECUTION_TIME=30
@@ -65,3 +76,7 @@ EOT
 
 COPY --from=config-file /wp-config-docker.php /usr/src/wordpress/wp-config-docker.php
 COPY --chown=www-data:www-data wp-content /usr/src/wordpress/wp-content
+COPY rootfs /
+
+ENTRYPOINT []
+CMD ["/usr/bin/s6-svscan", "/etc/s6/services"]

@@ -1,3 +1,5 @@
+define('DISABLE_WP_CRON', getenv_docker('DISABLE_WP_CRON', true));
+
 /* C3 Cloudfront Clear Cache envs */
 define('AWS_ACCESS_KEY_ID', getenv_docker('AWS_ACCESS_KEY_ID', null));
 define('AWS_SECRET_ACCESS_KEY', getenv_docker('AWS_SECRET_ACCESS_KEY', null));

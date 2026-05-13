@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /var/www/html
+exec s6-setuidgid www-data supercronic --quiet /etc/supercronic/wordpress
