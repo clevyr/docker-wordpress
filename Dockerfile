@@ -60,7 +60,7 @@ ENV PHP_MAX_FILE_UPLOADS=20
 
 ARG PHP_EXTENSIONS
 RUN --mount=type=bind,from=ext-installer,src=/usr/bin/install-php-extensions,dst=/usr/bin/install-php-extensions <<EOT
-  install-php-extensions $PHP_EXTENSIONS
+  install-php-extensions redis $PHP_EXTENSIONS
 EOT
 
 COPY --from=config-file /wp-config-docker.php /usr/src/wordpress/wp-config-docker.php
