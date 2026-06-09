@@ -19,15 +19,14 @@ FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-${FLAVOR} AS base
 
 FROM alpine AS config-file
 RUN apk add --no-cache sd ripgrep
-COPY wp-config.ext.php /
 COPY --from=base /usr/src/wordpress/wp-config-docker.php /
 RUN <<EOT
   set -eu
-  ext="$(cat /wp-config.ext.php)"
-  match="/* That's all, stop editing! Happy publishing. */"
+  match="/* Add any custom values between this line and the \"stop editing\" line. */"
+  inject="require '/usr/src/clevyr/wp-config-docker.php';"
   nl=$'\n'
-  rg --fixed-strings --quiet "$match"  /wp-config-docker.php
-  sd --fixed-strings --max-replacements=1 "$match" "${ext}${nl}${nl}${match}" /wp-config-docker.php
+  rg --fixed-strings --quiet "$match" /wp-config-docker.php
+  sd --fixed-strings --max-replacements=1 "$match" "${inject}${nl}${nl}${match}" /wp-config-docker.php
 EOT
 
 FROM base
