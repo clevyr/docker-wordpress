@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - wordpress_version: 6.8.2
+          - wordpress_version: 7.0.0
             php_version: 8.4
             cli_version: 2.12.0
             latest: true

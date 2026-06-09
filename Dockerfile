@@ -1,14 +1,14 @@
 # syntax=docker/dockerfile:1
 
-ARG WORDPRESS_VERSION=6.7.2
-ARG CLI_VERSION=2.11.0
+ARG WORDPRESS_VERSION=7.0.0
+ARG CLI_VERSION=2.12.0
 ARG PHP_VERSION=8.4
 ARG FLAVOR=apache
 
-FROM ghcr.io/mlocati/php-extension-installer:2.7.24 AS ext-installer
+FROM ghcr.io/mlocati/php-extension-installer:2.11.6 AS ext-installer
 
 FROM --platform=$BUILDPLATFORM alpine AS supercronic
-ARG SUPERCRONIC_VERSION=v0.2.45
+ARG SUPERCRONIC_VERSION=v0.2.46
 ARG TARGETARCH
 RUN wget -O /usr/local/bin/supercronic "https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" \
     && chmod +x /usr/local/bin/supercronic
