@@ -8,11 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        wordpress_version: ["7.0.0"]
+        php_version: ["8.4", "8.5"]
+        cli_version: ["2.12.0"]
         include:
-          - wordpress_version: 7.0.0
-            php_version: 8.4
-            cli_version: 2.12.0
-            latest: true
+          - wordpress_version: "7.0.0"
+            latest_minor: "true"
+          - php_version: "8.5"
+            latest: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,7 +27,8 @@ jobs:
           images: ghcr.io/clevyr/wordpress
           tags: |
             type=raw,value=${{ matrix.wordpress_version }}-php${{ matrix.php_version }},enabled=${{ matrix.name == '' }}
-            type=raw,value=php${{ matrix.php_version }},enabled=${{ matrix.latest }}
+            type=raw,value=php${{ matrix.php_version }},enable=${{ matrix.latest_minor == 'true' }}
+            type=raw,value=latest,enable=${{ matrix.latest == 'true' }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
