@@ -1,3 +1,5 @@
+<?php
+
 if (!function_exists('define_docker_env')) {
     function define_docker_env($name, $default = null) {
         $value = getenv_docker($name, $default);
