@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        wordpress_version: ["7.0.0"]
+        wordpress_version: ["7.0.2"]
         php_version: ["8.4", "8.5"]
         cli_version: ["2.12.0"]
         include:
-          - wordpress_version: "7.0.0"
+          - wordpress_version: "7.0.2"
             latest_minor: "true"
           - php_version: "8.5"
             latest: "true"
