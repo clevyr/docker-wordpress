@@ -57,7 +57,7 @@ RUN <<EOT
   ln -s php.ini-production php.ini
 
   apt-get update
-  apt-get install -y s6
+  apt-get install -y s6 rsync
   rm -rf /var/lib/apt/lists/*
 EOT
 
