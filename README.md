@@ -27,3 +27,12 @@ The following variables can be configured at build (Typically with an `ARG` in t
 | `PHP_POST_MAX_SIZE`       | See [`post_max_size`](https://www.php.net/manual/en/ini.core.php#ini.post-max-size).                     | `32M`   |
 | `PHP_UPLOAD_MAX_FILESIZE` | See [`upload_max_filesize`](https://www.php.net/manual/en/ini.core.php#ini.upload-max-filesize).         | `8M`    |
 | `PHP_MAX_FILE_UPLOADS`    | See [`max_file_uploads`](https://www.php.net/manual/en/ini.core.php#ini.max-file-uploads).               | `20`    |
+
+### Search Engine Visibility
+
+The `blog_public` option (Settings > Reading > "Discourage search engines from indexing this site")
+can be forced via env so that dev sites are never accidentally indexed.
+
+| Environment Variable | Description                                                                                                                             | Default   |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| `WP_BLOG_PUBLIC`     | Forces search engine visibility. `false` discourages indexing, `true` allows it. When unset, the setting is left editable in the admin. | _(unset)_ |
