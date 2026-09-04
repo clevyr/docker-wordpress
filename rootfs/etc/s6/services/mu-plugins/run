@@ -1,0 +1,8 @@
+#!/bin/sh
+s6-svc -O .
+
+[ -e /var/www/html/wp-includes/version.php ] || exit 0
+
+exec rsync --archive --chown=www-data:www-data \
+  /usr/src/wordpress/wp-content/mu-plugins/ \
+  /var/www/html/wp-content/mu-plugins/
