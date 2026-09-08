@@ -77,5 +77,6 @@ COPY --from=config-file /wp-config-docker.php /usr/src/wordpress/wp-config-docke
 COPY --chown=www-data:www-data wp-content /usr/src/wordpress/wp-content
 COPY rootfs /
 
+STOPSIGNAL SIGTERM
 ENTRYPOINT []
 CMD ["/usr/bin/s6-svscan", "/etc/s6/services"]
