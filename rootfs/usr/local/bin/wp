@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ "$(id -u)" = 0 ]; then
+  export HOME=/var/www
+  exec s6-setuidgid www-data /usr/local/bin/wp-cli "$@"
+fi
+
+exec /usr/local/bin/wp-cli "$@"

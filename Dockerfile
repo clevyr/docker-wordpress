@@ -32,8 +32,7 @@ EOT
 FROM base
 
 COPY --from=supercronic /usr/local/bin/supercronic /usr/local/bin/supercronic
-COPY --from=wp-cli-source /usr/local/bin/wp /usr/local/bin/wp
-ENV WP_CLI_ALLOW_ROOT=1
+COPY --from=wp-cli-source /usr/local/bin/wp /usr/local/bin/wp-cli
 ENV PAGER=cat
 
 RUN <<EOT
