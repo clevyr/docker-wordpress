@@ -36,3 +36,12 @@ can be forced via env so that dev sites are never accidentally indexed.
 | Environment Variable | Description                                                                                                                             | Default   |
 |----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|-----------|
 | `WP_BLOG_PUBLIC`     | Forces search engine visibility. `false` discourages indexing, `true` allows it. When unset, the setting is left editable in the admin. | _(unset)_ |
+
+### File Modifications
+
+| Environment Variable | Description                                                                                                                                                     | Default   |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| `DISALLOW_FILE_EDIT` | Disables the plugin and theme file editors in the admin. See [`DISALLOW_FILE_EDIT`](https://developer.wordpress.org/advanced-administration/security/hardening/#disable-file-editing). | `true`    |
+| `DISALLOW_FILE_MODS` | Disables installing, updating, and deleting plugins, themes, and core from the admin (implies `DISALLOW_FILE_EDIT`). When unset, it is left undefined so a managed mu-plugin can set it instead. | _(unset)_ |
+
+Both accept `true`/`false`, `1`/`0`, `yes`/`no`, or `on`/`off`.

@@ -9,7 +9,27 @@ if (!function_exists('define_docker_env')) {
     }
 }
 
+if (!function_exists('define_docker_env_bool')) {
+    /**
+     * Defines a boolean constant from an env var. Unlike define_docker_env,
+     * "false" and "0" define false instead of a truthy string. Unset or
+     * empty falls back to $default, and a null default leaves it undefined.
+     */
+    function define_docker_env_bool($name, $default = null) {
+        $value = getenv_docker($name, '');
+        if ($value !== '') {
+            define($name, filter_var($value, FILTER_VALIDATE_BOOLEAN));
+        } elseif ($default !== null) {
+            define($name, $default);
+        }
+    }
+}
+
 define_docker_env('DISABLE_WP_CRON', true);
+
+/* File modification lockdown */
+define_docker_env_bool('DISALLOW_FILE_EDIT', true);
+define_docker_env_bool('DISALLOW_FILE_MODS');
 
 /* C3 Cloudfront Clear Cache envs */
 define_docker_env('AWS_ACCESS_KEY_ID');
