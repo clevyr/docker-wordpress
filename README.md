@@ -45,3 +45,9 @@ can be forced via env so that dev sites are never accidentally indexed.
 | `DISALLOW_FILE_MODS` | Disables installing, updating, and deleting plugins, themes, and core from the admin (implies `DISALLOW_FILE_EDIT`). When unset, it is left undefined so a managed mu-plugin can set it instead. | _(unset)_ |
 
 Both accept `true`/`false`, `1`/`0`, `yes`/`no`, or `on`/`off`.
+
+### Page Cache
+
+| Environment Variable | Description | Default |
+|----------------------|-------------|---------|
+| `WP_CACHE` | Lets a page cache plugin serve cached pages through `advanced-cache.php`. Accepts the same values as above. See [`WP_CACHE`](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#cache). | _(unset)_ |

@@ -31,6 +31,9 @@ define_docker_env('DISABLE_WP_CRON', true);
 define_docker_env_bool('DISALLOW_FILE_EDIT', true);
 define_docker_env_bool('DISALLOW_FILE_MODS');
 
+/* Page cache plugins (advanced-cache.php) */
+define_docker_env_bool('WP_CACHE');
+
 /* C3 Cloudfront Clear Cache envs */
 define_docker_env('AWS_ACCESS_KEY_ID');
 define_docker_env('AWS_SECRET_ACCESS_KEY');
